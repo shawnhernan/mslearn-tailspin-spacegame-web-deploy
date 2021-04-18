@@ -16,7 +16,7 @@ variables:
 
 steps:
 - task: UseDotNet@2
-  displayName: 'Use latest version of .NEt Core
+  displayName: 'Use latest version of .NET Core' 
   inputs: 
     packageType: sdk
     version: 5.x
