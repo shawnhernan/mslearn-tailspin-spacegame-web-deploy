@@ -34,16 +34,20 @@ steps:
 - script: './node_modules/.bin/node-sass $(wwwrootDir) --output $(wwwrootDir)'
   displayName: 'Compile Sass assets'
 
+<<<<<<< HEAD
 - script: 'echo "$(Build.DefinitionNAme), $(Build.BuildId), $(Build.BuildNumber)" > buildinfo.txt'  
   displayName: 'Write Build Info'
   workingDirectory: $(wwwrootDir)
 
+=======
+>>>>>>> master
 - task: DotNetCoreCLI@2
   displayName: 'Restore Project Dependencies'
   inputs: 
     command: 'restore'
     projects: '**/*.csproj'
 
+<<<<<<< HEAD
 - template: templates/build.yml
   parameters:
     buildConfiguration: 'Debug'
@@ -51,7 +55,32 @@ steps:
 - template: templates/build.yml
   parameters:
     buildConfiguration: 'Release'
+=======
+- script: 'echo "$(Build.DefinitionNAme), $(Build.BuildId), $(Build.BuildNumber)" > buildinfo.txt'  
+  displayName: 'Write Build Info'
+  workingDirectory: $(wwwrootDir)
+
+- task: DotNetCoreCLI@2
+  displayName: 'Build the project - $(buildConfiguration)'
+  inputs:
+    command: 'build'
+    arguments: '--no-restore --configuration $(buildConfiguration)'
+    projects: '**/*.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publish the project - $(buildConfiguration)'
+  inputs:
+    command: 'publish'
+    projects: '**/*.csproj'
+    publishWebProjects: false
+    arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
+    zipAfterPublish: true
+>>>>>>> master
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
   condition: succeeded()
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
